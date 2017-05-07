@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'cart',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',

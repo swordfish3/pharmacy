@@ -6,5 +6,7 @@ urlpatterns = (
         url(r'^$', views.index, name='index'),
         url(r'^allproducts/$', login_required(views.all_products), ),
         url(r'^allproducts/(?P<pharmacyid>\d+)/$', login_required(views.product_info), ),
+        url(r'^allproducts/(?P<pharmacyid>\d+)/$', login_required(views.post_form), ),
+
 
 )
