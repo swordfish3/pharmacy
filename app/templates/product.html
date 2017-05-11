@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<h2>Product</h2>
+
+
+<ul>
+
+
+    <li>name : {{ pdata.name }}</li>
+    <li>barcode : {{ pdata.barcode }}</li>
+    <li>retail : {{ pdata.price_retail }} euro</li>
+    <li>wholesale : {{ pdata.price_wholesale }} euro</li>
+    <li>quantity :<form method="POST" action="/app/allproducts/{{pdata.id}}/add/">
+            {% csrf_token %}
+            <input type="text" name="quantity"><br>
+
+            <button type="submit">Add to cart</button>
+        </form>
+    </li>
+
+
+</ul>
+<h5><a href="/app/allproducts/">go back</a></h5>
+
+
+
+{% endblock %}
