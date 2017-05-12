@@ -4,16 +4,16 @@
 
     <table>
         <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
+            <th  style="padding:0 15px 0 15px;">Product</th>
+            <th  style="padding:0 15px 0 15px;">Quantity</th>
+            <th  style="padding:0 15px 0 15px;">Total Price</th>
 
         </tr>
         {% for item in cart %}
         <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.total_price }}</td>
+            <td style="padding:0 15px 0 15px;">{{ item.product.name }}</td>
+            <td style="padding:0 15px 0 15px;">{{ item.quantity }}</td>
+            <td style="padding:0 14px 0 15px;">{{ item.total_price }}</td>
             <td><form method="POST" action="/app/allproducts/remove/">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ item.object_id }}">
