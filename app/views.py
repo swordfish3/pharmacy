@@ -36,13 +36,13 @@ def add_to_cart(request, pharmacyid):
     return render(request, 'cart.html', {'cart': cart}, )
 
 
-def remove_from_cart(request, pharmacyid):
-    product = Product.objects.get(pk=pharmacyid)
+
+def remove_from_cart(request):
+    product_id =request.POST.get('id')
+    product = Product.objects.get(pk=product_id)
     cart = Cart(request)
     cart.remove(product)
     return render(request, 'cart.html', {'cart': cart}, )
 
-
 def get_cart(request):
-    cart = Cart(request)
-    return render(request, 'cart.html', {'cart': cart}, )
+    return render_to_response('cart.html', dict(cart=Cart(request)))
