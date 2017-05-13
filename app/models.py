@@ -12,7 +12,7 @@ class Product(models.Model):
     name = models.CharField(default='test', max_length=200)
     barcode = models.BigIntegerField()
     retail = models.IntegerField(default=0)
-    quantity = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
 
     objects = ProductManager()
 

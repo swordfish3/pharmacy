@@ -14,7 +14,7 @@
     <li>wholesale : {{ pdata.price_wholesale }} euro</li>
     <li>quantity :<form method="POST" action="/app/allproducts/{{pdata.id}}/add/">
             {% csrf_token %}
-            <input type="text" name="quantity"><br>
+            <input type="text" name="quantity" value="1">
 
             <button type="submit">Add to cart</button>
         </form>
@@ -22,7 +22,7 @@
 
 
 </ul>
-<h5><a href="/app/allproducts/">go back</a></h5>
+<button><a href="/app/allproducts/">go back</a></button>
 
 
 
