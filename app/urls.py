@@ -12,6 +12,7 @@ urlpatterns = (
         url(r'^allproducts/(?P<pharmacyid>\d+)/add/$', login_required(views.add_to_cart), ),
         url(r'^allproducts/remove/$', login_required(views.remove_from_cart), ),
         url(r'^allproducts/cart/$', login_required(views.get_cart), ),
+        url(r'^allproducts/checkout/$', login_required(views.invoice), ),
 
 
 )
