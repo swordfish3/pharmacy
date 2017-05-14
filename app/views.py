@@ -7,6 +7,8 @@ from .models import Product
 from django.shortcuts import render
 from suds.client import Client
 from cart.cart import Cart
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
 client = Client('http://localhost:11564/SOAP_WS/services/AvailabilityWS?wsdl')
 
 def index(request):
@@ -29,13 +31,17 @@ def product_info(request, pharmacyid):
 def qualified_connection(name):
     return client.service.countAvailability(name)
 
+def purchase(name):
+     client.service.getPurchase(name)
+
 def add_to_cart(request, pharmacyid):
     web_data = urlopen('http://test.hua.gr:8000/pharmacy/' + str(pharmacyid) + '/?format=json').read().decode('utf-8')
     p_data = json.loads(web_data)
     quantity = int(request.POST.get('quantity'))
     av = qualified_connection(p_data['name'])
     if (av < quantity):
-        return render_to_response('error.html')
+        context = {'av':av}
+        return render(request,'error.html',context)
     else:
         product = Product.objects.create_product \
         (p_data['name'], p_data['barcode'], p_data['price_retail'], quantity)
@@ -54,3 +60,27 @@ def remove_from_cart(request):
 
 def get_cart(request):
     return render(request,'cart.html', {'cart':Cart(request)})
+
+def invoice(request):
+    cart = Cart(request)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
+    p = canvas.Canvas(response)
+    i= 20
+    j=750
+    for item in cart:
+        a= "Product: " +str(item.product.name)
+        b= "Quantity: "+str(item.quantity)
+        c = "Price: "+str(item.total_price)+"$"
+        p.drawString(20, j,a)
+        p.drawString(20, j-10,b)
+        p.drawString(20, j-20,c)
+        j= j - 50
+        q=item.quantity
+        k=0
+        while k<q:
+            client.service.getPurchase(str(item.product.name))
+            k+=1
+    p.showPage()
+    p.save()
+    return response
